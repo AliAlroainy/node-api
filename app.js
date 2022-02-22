@@ -1,108 +1,67 @@
-//  import express from 'express';
-//  import { render } from 'express/lib/response';
-
-// const app = express();
-// //const axios = require('axios')
-// //import fetch from 'node-fetch';
-// //import 'node-fetch' f fetch;
-// // const fs = require('fs');
-
-// // const dummyjson = require('dummy-json');
-
-// // const template = fs.readFileSync('template.hbs', { encoding: 'utf8' });
-
-// import axios from 'axios';
-
-
-// app.use(express.json());
-// app.use(express.urlencoded({ extended: false }));
-// app.use(cookieParser());
-// app.use(express.static(path.join(__dirname, 'public')));
-
-
-
-//  app.get('/api/p', async(req, res) =>{
-     
-// // fetch('https://dummyjson.com/products')
-// // .then(res => res.json())
-// // .then(console.log);
-// //  const product =  await axios.get(`https://dummyjson.com/products/`);
-// //   console.log(res.json(product.json)) ;
-// axios.get('https://dummyjson.com/products')
-//   .then(function (response) {
-//     // handle success
-//     console.log(response);
-//   })
-//   .catch(function (error) {
-//     // handle error
-//     console.log(error);
-//   })
-//   .then(function () {
-//     // always executed
-//   });
-//  var data = axios.get('');
-    
-// res.json(data);
-
-// });
-
-
-
-
-// app.set('view engine','ejs');
-
-// app.use(express.static('public'));
-// const port = process.env.PORT || 3000 ;
-
-// app.get("/", (req,res)=>{
-//     // var product =  
-//     res.render("index");
-//     res.end();
-// });
-
-
-// app.listen(port);
-// console.log('server started');
-
-
-const createError = require('http-errors');
-const express = require('express');
-const path = require('path');
-const cookieParser = require('cookie-parser');
-const logger = require('morgan');
-
-const indexRouter = require('./routes/index');
+import express from 'express' ;
+import fetch from 'node-fetch';
 
 const app = express();
 
-// view engine setup
-app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 
-app.use(logger('dev'));
-app.use(express.json());
-app.use(express.urlencoded({ extended: false }));
-app.use(cookieParser());
-app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static('public'));
+
+app.set('views', 'views');
+
+async function fechHome(req, response) {
+    var category = null;
+    var allCategory = null;
 
 
-app.use('/', indexRouter);
+    await  fetch('https://dummyjson.com/products/category/smartphones')
+    .then(res0 => res0.json())
+    .then(res0 => allCategory = res0.products)
 
-// catch 404 and forward to error handler
-app.use((req, res, next) => {
-  next(createError(404));
+    await fetch('https://dummyjson.com/products/categories')
+    .then(res => res.json())
+    .then(res => category = res)
+
+    await fetch('https://dummyjson.com/products?limit=30&skip=15&select=title,price,rating,discountPercentage,thumbnail')
+        .then(res1 => res1.json())
+        .then(res1 => response.render('index', { Products: res1.products , cat:category , catall : allCategory  }))
+}
+
+function cat(req,res){
+    fetch('https://dummyjson.com/products/categories')
+.then(res => res.json())
+.then(res => response.render('index', { cat: res }))
+}
+
+app.get(['/', '/home'],(req,res)=>{
+    fechHome(req, res);
+    // cat(req,res);
 });
 
-// error handler
-app.use((err, req, res, next) => {
-  // set locals, only providing error in development
-  res.locals.message = err.message;
-  res.locals.error = req.app.get('env') === 'development' ? err : {};
-
-  // render the error page
-  res.status(err.status || 500);
-  res.render('error');
+app.get('/product',(req,res)=>{
+    
+    res.render('product');
+   
+});
+ 
+app.get('/checkout',(req,res)=>{
+    
+    res.render('checkout');  
 });
 
-module.exports = app;
 
+app.get('/store',(req,res)=>{
+    
+    res.render('store');
+   
+});
+ 
+
+app.use(function(req, res) {
+    res.render("404");
+    });
+
+
+
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, console.log(`Server started on port ${PORT}`));
