@@ -86,8 +86,21 @@
 										<% }) %>
 
 									</select>
-									<input class="input" placeholder="Search here">
-									<button class="search-btn">Search</button>
+
+									<input id="dd" class="input" placeholder="Search here">
+									<script>
+									 var input = document.getElementById('dd').value;
+									</script>
+										
+								
+											<a href="/search">	<button class="search-btn">Search</button>
+											
+									
+								
+									
+									 
+
+								
 								</form>
 							</div>
 						</div>
@@ -177,9 +190,9 @@
 				<div id="responsive-nav">
 					<!-- NAV -->
 					<ul class="main-nav nav navbar-nav">
-						<li class="active"><a href="#">all</a></li>
-						<li id="lap"><a href="#">Laptops</a></li>
-						<li><a href="#">Smartphones</a></li>
+						<li class="active"><a href="/home">home</a></li>
+						<li id="lap"><a href="/">about</a></li>
+						<li><a href="/">contact</a></li>
 						
 					</ul>
 					<!-- /NAV -->
@@ -208,7 +221,7 @@
 									<li id="tab" class="active"> <a data-toggle="tab" href="#tab1">All</a></li>
 									<li id="tab1"><a data-toggle="tab" href="#tab1">Laptops</a></li>
 									<li id="tab2" ><a data-toggle="tab" href="#tab1">Smartphones</a></li>
-									<li id="tab3"><a data-toggle="tab" href="#tab1">Cameras</a></li>
+									<li id="tab3"><a data-toggle="tab" href="#tab1">lighting</a></li>
 									
 								</ul>
 							</div>
@@ -222,6 +235,7 @@
 					<div class="col-md-12">
 						<div class="row">
 							<div class="products-tabs">
+								
 								<!-- tab -->
 								<div id="all" class="tab-pane active">
 									<div class="products-slick" data-nav="#slick-nav-1">
@@ -239,7 +253,7 @@
 											</div>
 											<div class="product-body">
 												<p class="product-category">Category</p>
-												<h3 class="product-name"><a href="#">
+												<h3 class="product-name"><a href="/<%= Product.id %>">
 													<%= Product.title %>
 												</a></h3>
 												<h4 class="product-price">
@@ -293,7 +307,7 @@
 															</div>
 															<div class="product-body">
 																<p class="product-category">Category</p>
-																<h3 class="product-name"><a href="#">
+																<h3 class="product-name"><a href="/<%= Product.id %>">
 																	<%= Product.title %>
 																</a></h3>
 																<h4 class="product-price">
@@ -337,7 +351,7 @@
 								<div id="laptop" class="tab-pane active">
 									<div class="products-slick" data-nav="#slick-nav-1">
 
-										<% catall.forEach(Product => { %>
+										<% laptops.forEach(Product => { %>
 
 															<!-- product -->
 										<div class="product">
@@ -350,7 +364,60 @@
 											</div>
 											<div class="product-body">
 												<p class="product-category">Category</p>
-												<h3 class="product-name"><a href="#">
+												<h3 class="product-name"><a href="/<%= Product.id %>">
+													<%= Product.title %>
+												</a></h3>
+												<h4 class="product-price">
+													$ <%= Product.price %>
+													<del class="product-old-price">$9.0</del></h4>
+												<div class="product-rating">
+													<i class="fa fa-star"></i>
+													<i class="fa fa-star"></i>
+													<i class="fa fa-star"></i>
+													<i class="fa fa-star"></i>
+													<i class="fa fa-star"></i>
+												</div>
+												<div class="product-btns">
+													<button class="add-to-wishlist"><i class="fa fa-heart-o"></i><span class="tooltipp">add to wishlist</span></button>
+													<button class="add-to-compare"><i class="fa fa-exchange"></i><span class="tooltipp">add to compare</span></button>
+													<button class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">quick view</span></button>
+												</div>
+											</div>
+											<div class="add-to-cart">
+												<button class="add-to-cart-btn"><i class="fa fa-shopping-cart"></i> add to cart</button>
+											</div>
+										</div>
+										<!-- /product -->
+										 
+										<% }) %>
+
+									
+			
+									
+																			</div>
+									<div id="slick-nav-1" class="products-slick-nav"></div>
+								</div>
+								<!-- /tab -->
+
+
+								<!-- tab4 -->
+								<div id="lighting" class="tab-pane active">
+									<div class="products-slick" data-nav="#slick-nav-1">
+
+										<% light.forEach(Product => { %>
+
+															<!-- product -->
+										<div class="product">
+											<div class="product-img">
+												<img src="<%= Product.thumbnail %>" alt="Product Image">
+												<div class="product-label">
+													<span class="sale">-30%</span>
+													<span class="new">NEW</span>
+												</div>
+											</div>
+											<div class="product-body">
+												<p class="product-category">Category</p>
+												<h3 class="product-name"><a href="/<%= Product.id %>" >
 													<%= Product.title %>
 												</a></h3>
 												<h4 class="product-price">
@@ -389,26 +456,31 @@
 								 // $('personal').click($('pp').hide());
 								$(document).ready(function(){
 
-								$("#smart,#laptop").hide();
+								$("#smart,#laptop,#lighting").hide();
 
 
 									});
 
 								$("#tab").click(function(){
-									$("#smart,#laptop").hide();
+									$("#smart,#laptop,#lighting").hide();
 								$("#all").show();
 
 
 									});
 
 									$("#tab1").click(function(){
-									$("#smart,#all").hide();
+									$("#smart,#all,#lighting").hide();
 								$("#laptop").show();
 									});
 
 									$("#tab2").click(function(){
-									$("#laptop,#all").hide();
+									$("#laptop,#all,#lighting").hide();
 								$("#smart").show();
+									});
+
+									$("#tab3").click(function(){
+									$("#laptop,#all,#smart").hide();
+								$("#lighting").show();
 									});
 								</script>
 
