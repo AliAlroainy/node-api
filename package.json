@@ -1,18 +1,26 @@
 {
-  "name": "express-api",
-  "version": "0.0.0",
-  "private": true,
+  "name": "node-api",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
   "scripts": {
-    "start": "node ./bin/www",
-    "dev": "nodemon ./bin/www"
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/AliAlroainy/node-api.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/AliAlroainy/node-api/issues"
+  },
+  "homepage": "https://github.com/AliAlroainy/node-api#readme",
   "dependencies": {
-    "axios": "^0.26.0",
-    "cookie-parser": "~1.4.4",
-    "debug": "~2.6.9",
-    "ejs": "~2.6.1",
-    "express": "~4.16.1",
-    "http-errors": "~1.6.3",
-    "morgan": "~1.9.1"
-  }
+    "ejs": "^3.1.6",
+    "express": "^4.17.3",
+    "node-fetch": "^3.2.0",
+    "nodemon": "^2.0.15"
+  },
+  "type": "module"
 }
